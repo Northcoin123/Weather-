@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    #weather {
+      margin-top: 20px;
+    }
+    .loading {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Weather App</h1>
+  <div id="location" class="loading">Locating...</div>
+  <div id="weather"></div>
+
+  <script>
+    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your API key
+    const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+    navigator.geolocation.getCurrentPosition(success, error);
+
+    function success(position) {
+      const { latitude, longitude } = position.coords;
+      fetch(`${apiUrl}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('location').textContent = `Location: ${data.name}`;
+          document.getElementById('weather').textContent = `Temperature: ${data.main.temp}°F, ${data.weather[0].description}`;
+        })
+        .catch(() => {
+          document.getElementById('location').textContent = 'Error fetching weather data.';
+        });
+    }
+
+    function error() {
+      document.getElementById('location').textContent = 'Unable to retrieve your location.';
+    }
+  </script>
+</body>
+</html>
