@@ -12,7 +12,7 @@
       background-color: #f0f0f0;
     }
     #weather {
-      margin-top: 20px;
+      margin-top: 21px;
     }
     .loading {
       font-style: italic;
